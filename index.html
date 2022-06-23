@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza_Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+<body>
+    <div class="container" x-data="{ 
+        showCart: false,
+         Large_PizzaTotal : 0.00,
+         Large_PizzaQty : 0,
+         Medium_PizzaTotal : 0.00,
+         Medium_PizzaQty : 0,
+         Small_PizzaTotal: 0.00,
+         Small_PizzaQty : 0,
+         payNow : false,
+         paymentAmount : 0,
+         paymentMessage : '',
+        
+         BuyLarge_Pizza() {
+            this.Large_PizzaTotal += 120.00;
+            this.Large_PizzaQty +=1
+         },
+         clearLarge_Pizza(){
+            if (this.Large_PizzaQty > 0) {
+                this.Large_PizzaTotal -= 120.00;
+                this.Large_PizzaQty -=1
+            }
+    
+         },
+         BuyMedium_Pizza() {
+            this.Medium_PizzaTotal += 59.00;
+            this.Medium_PizzaQty +=1
+         
+         },
+         clearMedium_Pizza() {
+            if (this.Medium_PizzaQty > 0) {
+                this.Medium_PizzaTotal -= 59.00;
+                this.Medium_PizzaQty -=1
+            }
+        
+        
+         },
+         BuySmall_Pizza() {
+            this.Small_PizzaTotal += 39.00;
+            this.Small_PizzaQty +=1
+         },
+         clearSmall_Pizza(){
+            if (this.Small_PizzaQty > 0) {
+                this.Small_PizzaTotal -= 39.00;
+                this.Small_PizzaQty -=1
+            }
+         
+         },
+             cartTotal() { 
+                // let locaTotal = 1000;
+                return this.Large_PizzaTotal + this.Medium_PizzaTotal + this.Small_PizzaTotal
+             },
+             totalQty() {
+                return this.Large_PizzaQty + this.Medium_PizzaQty + this.Small_PizzaQty
+             },
+
+             makePayment () {
+
+            if (!this.paymentAmount) {
+                this.paymentMessage ='No amount entered!'
+            }
+            if (this.paymentAmount >= this.cartTotal() ) {
+                this.paymentMessage ='Payement Successful!'
+                
+                setTimeout(() => {
+                this.payNow = false;
+                this.clearCart()
+
+                }, 9000);
+
+            } else {
+                this.paymentMessage ='Payement Failed!'
+            }
+             },
+             clearCart() {
+                this.Large_PizzaTotal = 0.00;
+                this.Large_PizzaQty = 0;
+                this.Medium_PizzaTotal = 0.00;
+                this.Medium_PizzaQty = 0;
+                this.Small_PizzaTotal = 0.00;
+                this.Small_PizzaQty = 0;
+             }
+
+
+
+            }" >
+        <div class=" header" >
+            <div class="f3">
+                <h1> PERFECT PIZZA</h1>
+
+                <img src="https://t3.ftcdn.net/jpg/02/60/19/28/240_F_260192891_VCsIEHlDPH3CQ9aTJhX0FkMpCWrQqZ7B.jpg"
+                width="50">
+                <img src="https://t3.ftcdn.net/jpg/01/16/54/08/240_F_116540817_hYBMUQ7fpYLP9gIEKKg9Smf2YTBU5IEd.jpg"
+                width="45">
+                <img src="https://t4.ftcdn.net/jpg/00/85/02/11/240_F_85021173_rb9PwcXyM3SXSL62VOWqK6lS3ZW7WJBE.jpg"
+                width="40em">
+                <small> Inspired by Xaba_KJ <a href="http//.www.perfectpizza.com/">perfectpizza</a> </small>
+        
+        </div>
+    
+        <div class="f1" >
+                <button x-on:click="showCart=true" ><img src="https://th.bing.com/th/id/OIP.vwk3EbN6z_krh9bLUi5DOAAAAA?w=197&h=197&c=7&r=0&o=5&pid=1.7" width="33" alt="">Show cart </button> 
+            <strong x-show="totalQty() >0"><span x-text="totalQty()"></span><img src="https://t4.ftcdn.net/jpg/00/85/02/11/240_F_85021173_rb9PwcXyM3SXSL62VOWqK6lS3ZW7WJBE.jpg" width="40px"></strong>
+                 <strong x-show="cartTotal() > 0"> R<span x-text="cartTotal().toFixed(2)" >R0.00</strong>   
+                 </div> 
+                </div>
+    
+    <div class="cart-box">
+        <div class="cart" x-show="showCart" >
+            <div>
+                <button x-on:click="showCart=false" > 
+                    <img src="https://th.bing.com/th/id/OIP.vwk3EbN6z_krh9bLUi5DOAAAAA?w=197&h=197&c=7&r=0&o=5&pid=1.7" width="33" alt="">
+                Hide cart </button>
+            
+            </div>
+            <div class="">
+                <h2>Shopping Cart
+                    <img src="https://th.bing.com/th/id/OIP.vwk3EbN6z_krh9bLUi5DOAAAAA?w=197&h=197&c=7&r=0&o=5&pid=1.7" width="30"alt="">
+                </h2>
+
+
+<table>
+    <tr>
+        <td>Large_Pizza </td>
+        <td>
+            <span x-text="Large_PizzaQty"></span>
+            <button x-on:click="BuyLarge_Pizza" x-show="Large_PizzaQty > 0" >+</button>
+            <button x-on:click="clearLarge_Pizza" x-show="Large_PizzaQty > 0" >-</button>
+
+        </td>
+        <td >
+
+        R<span x-text="Large_PizzaTotal.toFixed(2)"></span>
+
+        </td>
+    </tr>
+    
+    <tr>
+        <td>Medium_Pizza </td>
+        <td>
+            <span x-text="Medium_PizzaQty"></span>
+            <button x-on:click="BuyMedium_Pizza" x-show="Medium_PizzaQty > 0" >+</button>
+            <button x-on:click="clearMedium_Pizza" x-show="Medium_PizzaQty > 0" >-</button>
+
+            <td>
+            R<span x-text="Medium_PizzaTotal.toFixed(2)"></span>
+        </td>
+        
+    </tr>
+
+        <td> Small_Pizza </td>
+        <td>
+            <span x-text="Small_PizzaQty"></span>
+
+            <button x-on:click="BuySmall_Pizza" x-show="Small_PizzaQty > 0" >+</button>
+            <button x-on:click="clearSmall_Pizza" x-show="Small_PizzaQty > 0" >-</button>
+
+        </td>
+        <td>
+            R<span x-text="Small_PizzaTotal.toFixed(2)"></span>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">Total</td>
+        <td>
+        R<span x-text="cartTotal().toFixed(2)"></span>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div x-show="payNow" >
+                <div class="message" x-text="paymentMessage" ></div>
+            <div>
+                <label for="">Payement amount</label>
+                <input class="Input" type="number" placeholder="Payement amount" x-model="paymentAmount">
+                <button x-on:click="makePayment" class="btn">
+                    <img src="https://www.fcc-fac.ca/en/knowledge/ag-economics/top-economic-trends-of-2019-plateauing-net-farm-income.img.png?ts=1613518175048" width="35"alt="">Pay Now</button>
+            </div>
+            <div>
+<div x-text="paymentAmount"></div>
+            </div>
+            
+        </div>
+
+        </td>
+        <td>
+            <button x-show="!payNow" x-on:click="payNow=true" class="btn">
+                <img src="https://www.fcc-fac.ca/en/knowledge/ag-economics/top-economic-trends-of-2019-plateauing-net-farm-income.img.png?ts=1613518175048" width="35"alt="">
+            Pay</button>
+        </td>
+    </tr>
+
+</table>
+
+</div>
+
+</div>
+
+    <div class="pizzas">
+
+    
+    <div class="pizza Large_Pizza">
+        <h2>Large Pizza</h2>
+        <img src="https://t3.ftcdn.net/jpg/02/60/19/28/240_F_260192891_VCsIEHlDPH3CQ9aTJhX0FkMpCWrQqZ7B.jpg"
+            width="350em">
+        R120.00
+        <td>
+            <button class="buy btn" x-on:click="BuyLarge_Pizza">
+                <img src="https://th.bing.com/th/id/OIP.vwk3EbN6z_krh9bLUi5DOAAAAA?w=197&h=197&c=7&r=0&o=5&pid=1.7" width="20"alt="">
+            Buy</button>
+        </td>
+        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore
+            magna aliqua.
+
+        </div>
+    </div>
+
+    <div class="pizza Medium_Pizza">
+        <h2>Medium Pizza</h2>
+        <img src="https://t3.ftcdn.net/jpg/01/16/54/08/240_F_116540817_hYBMUQ7fpYLP9gIEKKg9Smf2YTBU5IEd.jpg"
+            width="350em">
+
+        R59.00
+        <td>
+            <button class="buy btn" x-on:click="BuyMedium_Pizza">
+                <img src="https://th.bing.com/th/id/OIP.vwk3EbN6z_krh9bLUi5DOAAAAA?w=197&h=197&c=7&r=0&o=5&pid=1.7" width="20"alt="">
+            Buy</button>
+        </td>
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore
+            magna aliqua.
+        </div>
+    </div>
+
+    <div class="pizza Small_Pizza">
+        <h2>Small Pizza</h2>
+        <img src="https://t4.ftcdn.net/jpg/00/85/02/11/240_F_85021173_rb9PwcXyM3SXSL62VOWqK6lS3ZW7WJBE.jpg"
+            width="350em">
+
+
+        R39.00
+        <td>
+            <button class="buy btn" x-on:click="BuySmall_Pizza" >
+                <img src="https://th.bing.com/th/id/OIP.vwk3EbN6z_krh9bLUi5DOAAAAA?w=197&h=197&c=7&r=0&o=5&pid=1.7" width="20"alt="">
+            Buy</button>
+        </td>
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore
+        </div>
+    </div>
+</div>
+    <div class="Contact-Details">
+        <h2>Contact Details</h2>
+        <div>
+            Contact us at Tell: 011 524 7511
+        </div>
+
+        <div>
+            Email: info@perfectpizza.co.za
+        </div>
+    </div> 
+</body>
+</html>
